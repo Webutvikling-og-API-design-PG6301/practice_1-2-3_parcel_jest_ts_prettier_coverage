@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import { Routes, Route, Link, useNavigate } from "react-router-dom";
 import { randomQuestion, isCorrectAnswer } from "./questions";
+
 export const Home = ({ isRightAnswer, isQuestionAnswered }) => {
   const navigate = useNavigate();
 
   return (
     <div>
       <h1>This is the home page</h1>
-      <h1>
+      <h1 data-testid={"status"}>
         You have answered {isRightAnswer} / {isQuestionAnswered}
       </h1>
       <Link to="/question">
@@ -39,7 +40,10 @@ export const Questions = ({ setIsRightAnswer, setIsQuestionAnswered }) => {
         .map((answer, idx) => {
           return (
             <div key={idx}>
-              <button onClick={() => handleAnswer(answer)}>
+              <button
+                data-testid={"clicked"}
+                onClick={() => handleAnswer(answer)}
+              >
                 {question.answers[answer]}
               </button>
             </div>
