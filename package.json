@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "dev": "parcel index.html",
-    "test": "jest"
+    "test": "jest",
+    "verify": "npm run test:coverage",
+    "test:coverage": "jest --coverage"
   },
   "keywords": [],
   "author": "",
