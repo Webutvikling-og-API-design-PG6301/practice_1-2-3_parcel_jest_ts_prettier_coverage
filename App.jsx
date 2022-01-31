@@ -1,13 +1,15 @@
 import React, { useState } from "react";
 import { Routes, Route, Link, useNavigate } from "react-router-dom";
 import { randomQuestion, isCorrectAnswer } from "./questions";
-export const Home = ({ isRightAnswer }) => {
+export const Home = ({ isRightAnswer, isQuestionAnswered }) => {
   const navigate = useNavigate();
 
   return (
     <div>
       <h1>This is the home page</h1>
-      <h1>You have answered {isRightAnswer} / 10</h1>
+      <h1>
+        You have answered {isRightAnswer} / {isQuestionAnswered}
+      </h1>
       <Link to="/question">
         <button>New Quiz</button>
       </Link>
@@ -15,11 +17,12 @@ export const Home = ({ isRightAnswer }) => {
   );
 };
 
-export const Questions = ({ setIsRightAnswer }) => {
+export const Questions = ({ setIsRightAnswer, setIsQuestionAnswered }) => {
   const navigate = useNavigate();
   const [question, setQuestion] = useState(randomQuestion());
 
   const handleAnswer = (answer) => {
+    setIsQuestionAnswered((prev) => prev + 1);
     if (isCorrectAnswer(question, answer)) {
       setIsRightAnswer((prev) => prev + 1);
       navigate("/answer/correct");
@@ -33,10 +36,10 @@ export const Questions = ({ setIsRightAnswer }) => {
       <h1>{question.question}</h1>
       {Object.keys(question.answers)
         .filter((value) => question.answers[value])
-        .map((answer) => {
+        .map((answer, idx) => {
           return (
-            <div key={question.id}>
-              <button onClick={handleAnswer(answer)}>
+            <div key={idx}>
+              <button onClick={() => handleAnswer(answer)}>
                 {question.answers[answer]}
               </button>
             </div>
@@ -67,14 +70,28 @@ export const Answers = () => {
 
 const App = () => {
   const [isRightAnswer, setIsRightAnswer] = useState(0);
+  const [isQuestionAnswered, setIsQuestionAnswered] = useState(0);
   return (
     <div>
       <h1>Welcome to quizmaster</h1>
       <Routes>
-        <Route path={"/"} element={<Home isRightAnswer={isRightAnswer} />} />
+        <Route
+          path={"/"}
+          element={
+            <Home
+              isRightAnswer={isRightAnswer}
+              isQuestionAnswered={isQuestionAnswered}
+            />
+          }
+        />
         <Route
           path={"/question"}
-          element={<Questions setIsRightAnswer={setIsRightAnswer} />}
+          element={
+            <Questions
+              setIsRightAnswer={setIsRightAnswer}
+              setIsQuestionAnswered={setIsQuestionAnswered}
+            />
+          }
         />
         <Route path={"/answer/*"} element={<Answers />} />
       </Routes>
