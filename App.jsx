@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Routes, Route, Link, useNavigate } from "react-router-dom";
 import { randomQuestion, isCorrectAnswer } from "./questions";
+
+export const QuestionContext = React.createContext({ randomQuestion });
 
 export const Home = ({ isRightAnswer, isQuestionAnswered }) => {
   const navigate = useNavigate();
@@ -20,7 +22,6 @@ export const Home = ({ isRightAnswer, isQuestionAnswered }) => {
 
 export const Questions = ({ setIsRightAnswer, setIsQuestionAnswered }) => {
   const navigate = useNavigate();
-  const [question, setQuestion] = useState(randomQuestion());
 
   const handleAnswer = (answer) => {
     setIsQuestionAnswered((prev) => prev + 1);
@@ -32,6 +33,9 @@ export const Questions = ({ setIsRightAnswer, setIsQuestionAnswered }) => {
     }
   };
 
+  const { randomQuestion } = useContext(QuestionContext);
+  const [question] = useState(randomQuestion());
+
   return (
     <div>
       <h1>{question.question}</h1>
@@ -39,11 +43,8 @@ export const Questions = ({ setIsRightAnswer, setIsQuestionAnswered }) => {
         .filter((value) => question.answers[value])
         .map((answer, idx) => {
           return (
-            <div key={idx}>
-              <button
-                data-testid={"clicked"}
-                onClick={() => handleAnswer(answer)}
-              >
+            <div key={idx} data-testid={answer}>
+              <button onClick={() => handleAnswer(answer)}>
                 {question.answers[answer]}
               </button>
             </div>
