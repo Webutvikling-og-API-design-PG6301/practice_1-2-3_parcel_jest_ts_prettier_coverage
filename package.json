@@ -7,7 +7,7 @@
     "dev": "parcel index.html",
     "test": "jest",
     "verify": "npm run test:coverage",
-    "test:coverage": "jest -collectCoverage"
+    "test:coverage": "jest --coverage"
   },
   "keywords": [],
   "author": "",
