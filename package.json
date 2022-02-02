@@ -20,7 +20,10 @@
     "parcel": "^2.2.1"
   },
   "jest": {
-    "testEnvironment": "jsdom"
+    "testEnvironment": "jsdom",
+    "collectCoverageFrom": [
+      "*.jsx"
+    ]
   },
   "babel": {
     "presets": [
