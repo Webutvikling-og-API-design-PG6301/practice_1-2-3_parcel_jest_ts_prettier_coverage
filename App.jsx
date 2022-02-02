@@ -24,7 +24,7 @@ export const Questions = ({ setIsRightAnswer, setIsQuestionAnswered }) => {
   const navigate = useNavigate();
 
   const handleAnswer = (answer) => {
-    setIsQuestionAnswered((prev) => prev + 1);
+    setIsQuestionAnswered((pre) => pre + 1);
     if (isCorrectAnswer(question, answer)) {
       setIsRightAnswer((prev) => prev + 1);
       navigate("/answer/correct");
