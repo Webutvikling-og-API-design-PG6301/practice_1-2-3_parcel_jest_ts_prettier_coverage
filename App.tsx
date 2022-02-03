@@ -1,10 +1,20 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, FC } from "react";
 import { Routes, Route, Link, useNavigate } from "react-router-dom";
 import { randomQuestion, isCorrectAnswer } from "./questions";
 
 export const QuestionContext = React.createContext({ randomQuestion });
 
-export const Home = ({ isRightAnswer, isQuestionAnswered }) => {
+interface Props {
+  isQuestionAnswered: number;
+  isRightAnswer: number;
+}
+
+interface Isetter {
+  setIsRightAnswer: (isRightAnswer: Isetter) => void;
+  setIsQuestionAnswered: (isQuestionAnswered: Isetter) => void;
+}
+
+export const Home = ({ isRightAnswer, isQuestionAnswered }: Props) => {
   const navigate = useNavigate();
 
   return (
@@ -20,13 +30,16 @@ export const Home = ({ isRightAnswer, isQuestionAnswered }) => {
   );
 };
 
-export const Questions = ({ setIsRightAnswer, setIsQuestionAnswered }) => {
+export const Questions = ({
+  setIsRightAnswer,
+  setIsQuestionAnswered,
+}: Isetter) => {
   const navigate = useNavigate();
 
-  const handleAnswer = (answer) => {
+  const handleAnswer = (answer: string) => {
     setIsQuestionAnswered((pre) => pre + 1);
     if (isCorrectAnswer(question, answer)) {
-      setIsRightAnswer((prev) => prev + 1);
+      setIsRightAnswer((prev: number) => prev + 1);
       navigate("/answer/correct");
     } else {
       navigate("/answer/wrong");
@@ -73,9 +86,9 @@ export const Answers = () => {
   );
 };
 
-const App = () => {
-  const [isRightAnswer, setIsRightAnswer] = useState(0);
-  const [isQuestionAnswered, setIsQuestionAnswered] = useState(0);
+const App: FC = () => {
+  const [isRightAnswer, setIsRightAnswer] = useState<number>(0);
+  const [isQuestionAnswered, setIsQuestionAnswered] = useState<number>(0);
   return (
     <div>
       <h1>Welcome to quizmaster</h1>

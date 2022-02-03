@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`master quiz Should show the answers snapshot 1`] = `"You have answered 5 / 22"`;
+
+exports[`master quiz should show correct answer 1`] = `"<div><h1>Are you happy?</h1><div data-testid=\\"answer_a\\"><button>Yes</button></div><div data-testid=\\"answer_b\\"><button>No</button></div><div data-testid=\\"answer_c\\"><button>Maybe</button></div></div>"`;
+
+exports[`master quiz should show questions 1`] = `"<div><h1>Welcome to quizmaster</h1><div><h1>Are you happy?</h1><div data-testid=\\"answer_a\\"><button>Yes</button></div><div data-testid=\\"answer_b\\"><button>No</button></div><div data-testid=\\"answer_c\\"><button>Maybe</button></div></div></div>"`;
